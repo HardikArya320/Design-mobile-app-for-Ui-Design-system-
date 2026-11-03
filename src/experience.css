@@ -1,0 +1,8 @@
+.product-side-link.active,.product-side-link.route-active{background:#eceee5;color:var(--ink);font-weight:600}
+.sidebar>.product-nav{flex:0 0 auto;overflow:visible}
+.sidebar>.side-label,.sidebar>.sidebar-auth,.sidebar>.signout-link,.sidebar>.sidebar-bottom{flex-shrink:0}
+.sidebar>.side-nav[aria-label="Design system sections"]{flex:1;min-height:70px}
+.auth-form{padding:14px}
+.search-box{width:225px;min-height:44px;height:auto;padding:14px}
+@media(max-width:1180px){.search-box{width:185px}}
+@media(max-width:700px){.search-box{width:33px;min-height:31px;height:31px;padding:0 9px}}

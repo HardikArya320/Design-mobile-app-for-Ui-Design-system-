@@ -1,6 +1,6 @@
 # Forma Design System
 
-A responsive design system reference website with a home screen and interactive examples for foundations, components, navigation, layouts, patterns, icons and assets, states, accessibility, and documentation.
+A responsive design system website with an interactive component library, plus Home, Profile, Blog, Plans, Support, Sign up, and Sign in screens. The profile and journal use the supplied images. Forms and chat are local previews; authentication and external messaging are not connected.
 
 ## Run on Replit
 

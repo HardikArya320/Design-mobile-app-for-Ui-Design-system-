@@ -1,3 +1,5 @@
+import { appNavigation, renderExtraPage } from "./pages.js";
+
 const groups = [
   { id: "foundations", number: "01", name: "Foundations", caption: "The basic design rules.", items: ["Colour palette", "Typography and type scale", "Spacing system", "Grid system", "Border radius", "Shadows and effects", "Design tokens"] },
   { id: "components", number: "02", name: "Components", caption: "Reusable interface elements.", items: ["Buttons", "Input fields", "Checkboxes", "Radio buttons", "Dropdowns", "Cards", "Badges", "Tooltips", "Avatars", "Modals"] },
@@ -19,25 +21,32 @@ const icons = {
   arrow: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>',
   moon: '<svg viewBox="0 0 24 24" fill="none"><path d="M20.1 15.1A8.5 8.5 0 0 1 8.9 3.9 8.5 8.5 0 1 0 20.1 15.1Z"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
-  close: '<svg viewBox="0 0 24 24" fill="none"><path d="m18 6-12 12M6 6l12 12"/></svg>'
+  close: '<svg viewBox="0 0 24 24" fill="none"><path d="m18 6-12 12M6 6l12 12"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none"><path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-3-.6L4 20l1.5-4.2A7 7 0 0 1 4 11.5 7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>'
 };
 
 const icon = (name, cls = "") => `<span class="icon ${cls}" aria-hidden="true">${icons[name] || icons.box}</span>`;
 const navItems = groups.map(g => `<a class="side-link" href="#${g.id}" data-nav="${g.id}"><span class="nav-num">${g.number}</span><span>${g.name}</span></a>`).join("");
+const productNavItems = appNavigation.filter(([id]) => id !== "home").map(([id, label, glyph]) => `<a class="side-link product-side-link" href="#${id}" data-view="${id}"><span class="side-glyph" aria-hidden="true">${glyph}</span><span>${label}</span></a>`).join("");
+const topNavItems = appNavigation.map(([id, label]) => `<a href="#${id}" data-view="${id}">${label}</a>`).join("");
 const sectionHeading = g => `<div class="section-heading"><div class="section-kicker">${g.number} <span>—</span> SYSTEM / ${g.name.toUpperCase()}</div><h2>${g.name}</h2><p>${g.caption}</p></div>`;
 
 document.querySelector("#app").innerHTML = `
   <aside class="sidebar" id="sidebar">
-    <a class="brand" href="#home" aria-label="Forma home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a>
+    <a class="brand" href="#home" data-view="home" aria-label="Forma home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a>
     <div class="sidebar-meta"><span class="live-dot"></span> DESIGN SYSTEM <span class="version">v1.0</span></div>
-    <a class="side-link home-link active" href="#home" data-nav="home">${icon("grid")}<span>Home</span><span class="home-arrow">↗</span></a>
+    <a class="side-link home-link active" href="#home" data-nav="home" data-view="home">${icon("grid")}<span>Home</span><span class="home-arrow">↗</span></a>
+    <div class="side-label product-label">YOUR SPACE <span>05</span></div>
+    <nav class="side-nav product-nav" aria-label="Your pages">${productNavItems}</nav>
+    <div class="sidebar-auth"><a href="#signup" data-view="signup">Sign up <span>↗</span></a><a href="#signin" data-view="signin">Sign in</a></div>
     <div class="side-label">THE LIBRARY <span>09</span></div>
     <nav class="side-nav" aria-label="Design system sections">${navItems}</nav>
-    <div class="sidebar-bottom"><div class="avatar-stack"><span>F</span><span>DS</span><span>+</span></div><div><strong>Made for makers</strong><small>Thoughtfully, by Forma</small></div><button class="mini-icon theme-toggle" aria-label="Switch colour theme">${icon("moon")}</button></div>
+    <button class="signout-link" type="button" data-signout>Sign out <span>↗</span></button>
+    <div class="sidebar-bottom"><div class="avatar-stack"><img src="/attached_assets/CB4740EF-8E8A-4C05-9D97-3C6A04C45A2C_1793719038828.jpeg" alt="Hardik Arya"><span>+</span></div><div><strong>Hardik Arya</strong><small>UI designer</small></div><button class="mini-icon theme-toggle" aria-label="Switch colour theme">${icon("moon")}</button></div>
   </aside>
-  <div class="mobile-bar"><a class="brand" href="#home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a><button class="mobile-menu" aria-label="Toggle navigation">☰</button></div>
+  <div class="mobile-bar"><a class="brand" href="#home" data-view="home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a><button class="mobile-menu" aria-label="Toggle navigation">☰</button></div>
   <main class="main-shell">
-    <header class="topbar"><div class="breadcrumbs"><span>Library</span><span class="crumb-slash">/</span><strong id="crumb-current">Home</strong></div><div class="top-actions"><label class="search-box">${icon("search")}<input id="site-search" type="search" placeholder="Search the system…" aria-label="Search the design system"><kbd>⌘ K</kbd></label><span class="top-divider"></span><button class="top-theme theme-toggle" aria-label="Switch colour theme">${icon("moon")}</button><a class="github-link" href="#documentation">Docs ${icon("arrow")}</a></div></header>
+    <header class="topbar"><div class="breadcrumbs"><span>Forma</span><span class="crumb-slash">/</span><strong id="crumb-current">Home</strong></div><nav class="main-nav" aria-label="Main navigation">${topNavItems}</nav><div class="top-actions"><label class="search-box">${icon("search")}<input id="site-search" type="search" placeholder="Search the system…" aria-label="Search the design system"><kbd>⌘ K</kbd></label><span class="top-divider"></span><button class="top-theme theme-toggle" aria-label="Switch colour theme">${icon("moon")}</button><a class="github-link" href="#documentation" data-library-anchor="documentation">Docs ${icon("arrow")}</a></div></header>
     <div class="page-content" id="page-content">
       <section class="home-hero" id="home">
         <div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> THE OPEN DESIGN SYSTEM</div><h1>Good design<br>starts <em>with a system.</em></h1><p class="hero-lead">A shared language for creating digital experiences that feel clear, consistent, and unmistakably human.</p><div class="hero-actions"><a class="button button-dark" href="#foundations">Explore the system ${icon("arrow")}</a><a class="text-link" href="#components">Browse components <span>↗</span></a></div><div class="hero-proof"><div class="avatar-stack"><span>F</span><span>DS</span><span>+</span></div><span>Made for teams who care<br><strong>about the details.</strong></span></div></div>
@@ -50,8 +59,10 @@ document.querySelector("#app").innerHTML = `
       ${groups.map((g, index) => `<section class="doc-section" id="${g.id}" data-section="${g.id}">${sectionHeading(g)}${renderSection(g, index)}</section>`).join("")}
       <footer class="footer"><a class="brand" href="#home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a><span>Made with care. Shared with everyone.</span><a href="#home">Back to top ↑</a></footer>
     </div>
+    <div id="extra-pages"></div>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <button class="support-float" type="button" data-view="support" aria-label="Open the support chat preview">${icon("chat")}</button>
   <dialog class="demo-modal" id="demo-modal"><button class="modal-close" aria-label="Close dialog">${icon("close")}</button><div class="eyebrow">A LITTLE MORE DETAIL</div><h2>A dialog with good manners.</h2><p>Clear, focused, and easy to dismiss. A good modal keeps the conversation in context.</p><button class="button button-dark modal-done">Sounds good ${icon("arrow")}</button></dialog>
 `;
 
@@ -208,6 +219,54 @@ document.addEventListener("click", event => {
 
   if (event.target.closest(".mobile-menu")) document.querySelector("#sidebar").classList.toggle("mobile-open");
 
+  const viewLink = event.target.closest("[data-view]");
+  if (viewLink) {
+    event.preventDefault();
+    navigate(viewLink.dataset.view, true);
+    return;
+  }
+
+  const planButton = event.target.closest("[data-plan]");
+  if (planButton) {
+    selectedPlan = planButton.dataset.plan;
+    navigate("signup", true, selectedPlan);
+    return;
+  }
+
+  if (event.target.closest("[data-signout]")) {
+    notify("Sign out is a UI preview. No account is connected.");
+    navigate("home", true);
+    return;
+  }
+
+  const socialButton = event.target.closest("[data-social]");
+  if (socialButton) {
+    notify(`${socialButton.dataset.social} sign-in is not connected in this preview.`);
+    return;
+  }
+
+  if (event.target.closest("[data-open-post]")) {
+    const detail = document.querySelector("#post-detail");
+    if (detail) {
+      detail.hidden = false;
+      document.querySelectorAll(".post-grid,.featured-post,.journal-heading").forEach(el => { el.hidden = true; });
+      detail.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  if (event.target.closest("[data-close-post]")) {
+    document.querySelector("#post-detail").hidden = true;
+    document.querySelectorAll(".post-grid,.featured-post,.journal-heading").forEach(el => { el.hidden = false; });
+  }
+
+  const libraryAnchor = event.target.closest("[data-library-anchor]");
+  if (libraryAnchor) {
+    event.preventDefault();
+    const targetId = libraryAnchor.dataset.libraryAnchor;
+    navigate("home", true);
+    requestAnimationFrame(() => document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" }));
+  }
+
   const stateButton = event.target.closest(".state-buttons button:not(:disabled)");
   if (stateButton) {
     stateButton.parentElement.querySelectorAll("button").forEach(b => b.classList.toggle("active-state", b === stateButton));
@@ -228,9 +287,45 @@ document.querySelectorAll(".demo-form").forEach(form => form.addEventListener("s
   feedback.textContent = "Thanks — your message is ready.";
 }));
 
+document.addEventListener("submit", event => {
+  if (event.target.matches("#chat-form")) {
+    event.preventDefault();
+    const input = document.querySelector("#chat-input");
+    const message = input.value.trim();
+    if (!message) return;
+    const line = document.createElement("div");
+    line.className = "chat-line user-message";
+    const content = document.createElement("div");
+    const sender = document.createElement("span");
+    sender.className = "chat-sender";
+    sender.innerHTML = "You <small>now</small>";
+    const bubble = document.createElement("div");
+    bubble.className = "chat-bubble";
+    bubble.textContent = message;
+    content.append(sender, bubble);
+    line.append(content);
+    const image = document.createElement("img");
+    image.className = "hardik-avatar chat-avatar";
+    image.src = "/attached_assets/CB4740EF-8E8A-4C05-9D97-3C6A04C45A2C_1793719038828.jpeg";
+    image.alt = "Hardik Arya";
+    line.append(image);
+    document.querySelector("#chat-messages").append(line);
+    input.value = "";
+    line.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    notify("Added to this local chat preview. Nothing was sent.");
+    return;
+  }
+
+  if (event.target.matches(".demo-auth-form")) {
+    event.preventDefault();
+    event.target.querySelector(".auth-feedback").textContent = "This is a preview. No account was created and no details were sent.";
+  }
+});
+
 const search = document.querySelector("#site-search");
 const searchable = [...document.querySelectorAll(".chapter-card, .doc-section")];
 search.addEventListener("input", () => {
+  if (document.querySelector(".main-shell").classList.contains("route-view")) navigate("home", false);
   const query = search.value.trim().toLowerCase();
   searchable.forEach(el => {
     const match = !query || el.textContent.toLowerCase().includes(query);
@@ -265,3 +360,34 @@ document.addEventListener("keydown", event => {
 });
 
 if (localStorage.getItem("forma-theme") === "dark") document.documentElement.classList.add("dark");
+
+let selectedPlan = "";
+const routeLabels = Object.fromEntries(appNavigation.map(([id, label]) => [id, label]));
+routeLabels.signup = "Sign up";
+routeLabels.signin = "Sign in";
+
+function navigate(view, updateUrl = false, plan = "") {
+  const validViews = ["home", ...appNavigation.map(([id]) => id), "signup", "signin"];
+  if (!validViews.includes(view)) view = "home";
+  if (plan) selectedPlan = plan;
+  const isExtraPage = view !== "home";
+  document.querySelector(".main-shell").classList.toggle("route-view", isExtraPage);
+  document.querySelector("#extra-pages").innerHTML = isExtraPage ? renderExtraPage(view, selectedPlan) : "";
+  document.querySelector("#crumb-current").textContent = routeLabels[view] || "Home";
+  document.querySelectorAll("[data-view]").forEach(link => {
+    link.classList.toggle("route-active", link.dataset.view === view);
+    if (link.classList.contains("side-link")) link.classList.toggle("active", link.dataset.view === view);
+  });
+  document.querySelector("#sidebar").classList.remove("mobile-open");
+  document.querySelector(".support-float").hidden = view === "support";
+  if (updateUrl) {
+    const hash = view === "home" ? "#home" : `#${view}`;
+    history.pushState({ view }, "", `${location.pathname}${location.search}${hash}`);
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+window.addEventListener("popstate", () => navigate(location.hash.slice(1) || "home"));
+if (["profile", "blog", "pricing", "support", "signup", "signin"].includes(location.hash.slice(1))) {
+  navigate(location.hash.slice(1));
+}
