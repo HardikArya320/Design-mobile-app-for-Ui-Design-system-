@@ -1,0 +1,7 @@
+.brand-mark-image {
+  display: block;
+  object-fit: cover;
+  flex: 0 0 auto;
+  border-radius: 7px;
+  transform: none;
+}

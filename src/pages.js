@@ -5,6 +5,10 @@ const icons = {
   arrow: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>',
   mail: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
 };
+const providerIcons = {
+  google: `<svg class="provider-icon google-provider-icon" viewBox="0 0 48 48" role="img" aria-label="Google logo"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 38.21 46.98 31.86 46.98 24.55z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-3-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.64 0 20.21 0 24s.92 7.36 2.56 10.78l7.97-6.19z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>`,
+  apple: `<svg class="provider-icon apple-provider-icon" viewBox="0 0 24 24" role="img" aria-label="Apple logo"><path fill="currentColor" d="M16.77 12.045c-.028-3.052 2.493-4.523 2.607-4.594-1.42-2.076-3.63-2.36-4.417-2.39-1.879-.191-3.666 1.1-4.62 1.1-.952 0-2.425-1.074-3.984-1.045-2.05.03-3.94 1.192-4.995 3.024-2.12 3.68-.542 9.13 1.52 12.11 1.01 1.46 2.21 3.1 3.8 3.04 1.53-.06 2.1-.99 3.95-.99 1.85 0 2.37.99 3.99.96 1.65-.03 2.69-1.49 3.69-2.96 1.16-1.68 1.63-3.31 1.66-3.39-.036-.016-3.19-1.224-3.22-4.85zm-3.04-9.02c.84-1.01 1.4-2.42 1.24-3.82-1.2.05-2.65.8-3.51 1.81-.77.89-1.45 2.32-1.27 3.68 1.34.1 2.7-.68 3.54-1.67Z"/></svg>`
+};
 
 const icon = name => `<span class="page-icon">${icons[name]}</span>`;
 const avatar = (className = "") => `<img class="hardik-avatar ${className}" src="${portrait}" alt="Hardik Arya">`;
@@ -14,6 +18,7 @@ export const appNavigation = [
   ["dashboard", "Dashboard", '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>'],
   ["profile", "Profile", "◉"],
   ["blog", "Blog", "▤"],
+  ["icons", "Icon library", '<svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg>'],
   ["pricing", "Plans", "◇"],
   ["support", "Live support", "◌"],
   ["feedback", "Feedback", "✎"]
@@ -67,6 +72,27 @@ export function renderExtraPage(view, selectedPlan = "") {
         <aside class="feedback-aside"><div class="feedback-aside-mark">✳</div><span class="eyebrow">SMALL DETAILS MAKE A DIFFERENCE</span><h2>Good systems<br>grow from <em>good conversations.</em></h2><p>Your feedback helps shape the next thoughtful detail. It’s fine to keep it short—or share the whole story.</p><div class="feedback-aside-foot"><span class="feedback-status-dot"></span>Thanks for helping Forma grow.</div></aside>
       </div>
       <footer class="page-footer"><span>THANK YOU FOR BEING HERE</span><a href="#dashboard" data-view="dashboard">Back to dashboard ↗</a></footer>
+    </div>`;
+
+  if (view === "icons") return `
+    <div class="product-page icon-library-page">
+      <header class="page-heading"><div><div class="eyebrow">FORMA / ICON LIBRARY</div><h1>Small marks.<br><em>Clear meaning.</em></h1><p>A growing collection of familiar symbols, ready to use in thoughtful interfaces.</p></div><span class="post-count">BRAND ICONS / 02</span></header>
+      <section class="icon-library-grid" aria-label="Brand icon examples">
+        <article class="icon-library-card">
+          <div class="icon-library-card-top"><span>01 / SEARCH & SIGN IN</span><span>GOOGLE</span></div>
+          <div class="provider-stage google-stage">${providerIcons.google}</div>
+          <div class="icon-library-info"><div><span class="eyebrow">MULTICOLOUR MARK</span><h2>Google</h2><p>Four-colour brand mark for search and account flows.</p></div><span class="provider-color-dot google-color-dot" aria-label="Google blue"></span></div>
+          <div class="provider-sample">${providerIcons.google}<span>Continue with Google</span></div>
+        </article>
+        <article class="icon-library-card">
+          <div class="icon-library-card-top"><span>02 / SIGN IN</span><span>APPLE</span></div>
+          <div class="provider-stage apple-stage">${providerIcons.apple}</div>
+          <div class="icon-library-info"><div><span class="eyebrow">MONOCHROME MARK</span><h2>Apple</h2><p>Simple monochrome brand mark for Apple account flows.</p></div><span class="provider-color-dot apple-color-dot" aria-label="Apple black"></span></div>
+          <div class="provider-sample">${providerIcons.apple}<span>Continue with Apple</span></div>
+        </article>
+      </section>
+      <p class="icon-library-note">These are visual examples. Social sign-in is not connected in this preview.</p>
+      <footer class="page-footer"><span>ICONS / BRAND MARKS</span><a href="#home" data-library-anchor="assets">Explore icons & assets ↗</a></footer>
     </div>`;
 
   if (view === "profile") return `
@@ -141,7 +167,7 @@ export function renderExtraPage(view, selectedPlan = "") {
     return `
       <div class="auth-stage ${signup ? "signup-stage" : "signin-stage"}">
         <div class="auth-backdrop"><img src="${spaceArt}" alt="" aria-hidden="true"><div class="auth-glass-orb orb-one"></div><div class="auth-glass-orb orb-two"></div></div>
-        <section class="auth-card" aria-labelledby="auth-title"><a href="#home" data-view="home" class="auth-brand"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a>
+        <section class="auth-card" aria-labelledby="auth-title"><a href="#home" data-view="home" class="auth-brand"><img class="brand-mark brand-mark-image" src="/forma-icon.png" alt=""><span>forma<span class="brand-period">.</span></span></a>
           <div class="eyebrow">${signup ? "A GOOD PLACE TO BEGIN" : "GOOD TO HAVE YOU BACK"}</div><h1 id="auth-title">${signup ? "Create your account." : "Welcome back."}</h1><p class="auth-subtitle">${signup ? "Start building a system that feels like yours." : "Sign in to continue with Forma."}</p>
           <form class="auth-form demo-auth-form" data-auth="${view}">
             <label>Full name<input name="fullName" autocomplete="name" required placeholder="Enter your Full Name"></label>
@@ -151,7 +177,7 @@ export function renderExtraPage(view, selectedPlan = "") {
             <button class="button button-dark auth-submit" type="submit">${signup ? "Sign up" : "Sign in"} <span>↗</span></button><span class="auth-feedback" aria-live="polite"></span>
           </form>
           <div class="auth-divider"><span></span>or continue with<span></span></div>
-          <div class="social-auth"><button type="button" class="social-button" data-social="Google"><span class="google-g">G</span>Google</button><button type="button" class="social-button" data-social="Apple"><span class="apple-mark">●</span>Apple</button></div>
+          <div class="social-auth"><button type="button" class="social-button" data-social="Google">${providerIcons.google}<span>Google</span></button><button type="button" class="social-button" data-social="Apple">${providerIcons.apple}<span>Apple</span></button></div>
           <p class="auth-switch">${signup ? "Already have an account?" : "Don’t have an account?"} <a href="#${signup ? "signin" : "signup"}" data-view="${signup ? "signin" : "signup"}">${signup ? "Sign in" : "Sign up"}</a></p>
           <p class="auth-notice">Demo form only · Account creation and sign-in are not connected.</p>
         </section>

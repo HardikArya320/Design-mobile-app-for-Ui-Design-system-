@@ -33,7 +33,7 @@ const sectionHeading = g => `<div class="section-heading"><div class="section-ki
 
 document.querySelector("#app").innerHTML = `
   <aside class="sidebar" id="sidebar">
-    <a class="brand" href="#home" data-view="home" aria-label="Forma home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a>
+    <a class="brand" href="#home" data-view="home" aria-label="Forma home"><img class="brand-mark brand-mark-image" src="/forma-icon.png" alt=""><span>forma<span class="brand-period">.</span></span></a>
     <div class="sidebar-meta"><span class="live-dot"></span> DESIGN SYSTEM <span class="version">v1.0</span></div>
     <a class="side-link home-link active" href="#home" data-nav="home" data-view="home">${icon("grid")}<span>Home</span><span class="home-arrow">↗</span></a>
     <div class="side-label product-label">YOUR SPACE <span>07</span></div>
@@ -44,7 +44,7 @@ document.querySelector("#app").innerHTML = `
     <button class="signout-link" type="button" data-signout>Sign out <span>↗</span></button>
     <div class="sidebar-bottom"><div class="avatar-stack"><img src="/attached_assets/CB4740EF-8E8A-4C05-9D97-3C6A04C45A2C_1793719038828.jpeg" alt="Hardik Arya"><span>+</span></div><div><strong>Hardik Arya</strong><small>UI designer</small></div><button class="mini-icon theme-toggle" aria-label="Switch colour theme">${icon("moon")}</button></div>
   </aside>
-  <div class="mobile-bar"><a class="brand" href="#home" data-view="home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a><button class="mobile-menu" aria-label="Toggle navigation">☰</button></div>
+  <div class="mobile-bar"><a class="brand" href="#home" data-view="home"><img class="brand-mark brand-mark-image" src="/forma-icon.png" alt=""><span>forma<span class="brand-period">.</span></span></a><button class="mobile-menu" aria-label="Toggle navigation">☰</button></div>
   <main class="main-shell">
     <header class="topbar"><div class="breadcrumbs"><span>Forma</span><span class="crumb-slash">/</span><strong id="crumb-current">Home</strong></div><nav class="main-nav" aria-label="Main navigation">${topNavItems}</nav><div class="top-actions"><label class="search-box">${icon("search")}<input id="site-search" type="search" placeholder="Search the system…" aria-label="Search the design system"><kbd>⌘ K</kbd></label><span class="top-divider"></span><button class="top-theme theme-toggle" aria-label="Switch colour theme">${icon("moon")}</button><a class="github-link" href="#documentation" data-library-anchor="documentation">Docs ${icon("arrow")}</a></div></header>
     <div class="page-content" id="page-content">
@@ -57,7 +57,7 @@ document.querySelector("#app").innerHTML = `
       <section class="chapter-grid" aria-label="Design system chapters">${groups.map(g => `<a href="#${g.id}" class="chapter-card" data-chapter="${g.id}"><div class="chapter-card-top"><span class="chapter-number">${g.number}</span><span class="chapter-arrow">↗</span></div><h3>${g.name}</h3><p>${g.caption}</p><div class="chapter-tags">${g.items.slice(0, 3).map(x => `<span>${x}</span>`).join("")}${g.items.length > 3 ? `<span class="more-tag">+${g.items.length - 3}</span>` : ""}</div></a>`).join("")}</section>
       <div class="library-header"><div><div class="eyebrow">THE REFERENCE</div><h2>Built to be <em>used.</em></h2></div><span class="library-counter">01 — 09 / CHAPTERS</span></div>
       ${groups.map((g, index) => `<section class="doc-section" id="${g.id}" data-section="${g.id}">${sectionHeading(g)}${renderSection(g, index)}</section>`).join("")}
-      <footer class="footer"><a class="brand" href="#home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a><span>Made with care. Shared with everyone.</span><a href="#home">Back to top ↑</a></footer>
+      <footer class="footer"><a class="brand" href="#home"><img class="brand-mark brand-mark-image" src="/forma-icon.png" alt=""><span>forma<span class="brand-period">.</span></span></a><span>Made with care. Shared with everyone.</span><a href="#home">Back to top ↑</a></footer>
     </div>
     <div id="extra-pages"></div>
   </main>
@@ -121,7 +121,7 @@ function renderSection(g, index) {
 
   if (g.id === "assets") return `<div class="spec-grid">
     ${card("Icon library","06.01 / SYMBOLS",`<div class="icon-library">${["✳","↗","⌘","◇","◉","⌂","＋","♡","⟡","↘","◌","⌁"].map((i,n) => `<button data-copy="${i}" aria-label="Copy icon ${i}"><span>${i}</span><small>${["spark","arrow","command","shape","circle","home","add","heart","shine","down","ring","wave"][n]}</small></button>`).join("")}</div>`,"Simple symbols with a consistent visual weight.")}
-    ${card("Logo","06.02 / IDENTITY",`<div class="logo-showcase"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></div><div class="logo-variants"><span>PRIMARY</span><span>MARK ONLY</span><span>WORDMARK</span></div>`)}
+    ${card("Logo","06.02 / IDENTITY",`<div class="logo-showcase"><img class="brand-mark brand-mark-image" src="/forma-icon.png" alt=""><span>forma<span class="brand-period">.</span></span></div><div class="logo-variants"><span>PRIMARY</span><span>MARK ONLY</span><span>WORDMARK</span></div>`)}
     ${card("Illustrations","06.03 / EXPRESSION",`<div class="illustration-demo"><div class="illo-sun">✳</div><div class="illo-shape shape-a"></div><div class="illo-shape shape-b"></div><div class="illo-shape shape-c"></div><span>LESS, BUT<br>MORE HUMAN.</span></div>`)}
     ${card("Images","06.04 / ART DIRECTION",`<div class="image-placeholder"><div class="image-sun"></div><span>LIGHT / TEXTURE / SPACE</span><small>Good image direction starts with a feeling.</small></div>`)}
     ${card("3D glass effects","06.05 / MATERIAL",`<div class="glass-demo"><span class="glass-orb orb-a"></span><span class="glass-orb orb-b"></span><span class="glass-orb orb-c"></span><div class="glass-card"><span>FORM / 001</span><strong>Light,<br>captured.</strong><small>GLASS STUDY · 01</small></div></div>`)}
