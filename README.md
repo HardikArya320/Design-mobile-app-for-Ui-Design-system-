@@ -1,6 +1,10 @@
-# Forma Design System
+# Design-mobile-app-for-Ui-Design-system-
 
-A responsive design system website with an interactive component library, plus Home, Profile, Blog, Plans, Support, Sign up, and Sign in screens. The profile and journal use the supplied images. Forms and chat are local previews; authentication and external messaging are not connected.
+Design mobile app for Ui Design system.
+
+## Forma Design System
+
+A responsive design system website with an interactive component library, Typography and Icon Library pages, plus Home, Profile, Blog, Plans, Support, Sign up, and Sign in screens. The profile and journal use the supplied images. Forms and chat are local previews; authentication and external messaging are not connected.
 
 ## Run on Replit
 
