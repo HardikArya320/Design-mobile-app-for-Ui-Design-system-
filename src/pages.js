@@ -18,6 +18,8 @@ export const appNavigation = [
   ["dashboard", "Dashboard", '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>'],
   ["profile", "Profile", "◉"],
   ["blog", "Blog", "▤"],
+  ["typography", "Typography", '<svg viewBox="0 0 24 24" fill="none"><path d="M4 6V4h16v2M12 4v16m-4 0h8"/></svg>'],
+  ["component-library", "Components", '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>'],
   ["icons", "Icon library", '<svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg>'],
   ["pricing", "Plans", "◇"],
   ["support", "Live support", "◌"],
@@ -72,6 +74,38 @@ export function renderExtraPage(view, selectedPlan = "") {
         <aside class="feedback-aside"><div class="feedback-aside-mark">✳</div><span class="eyebrow">SMALL DETAILS MAKE A DIFFERENCE</span><h2>Good systems<br>grow from <em>good conversations.</em></h2><p>Your feedback helps shape the next thoughtful detail. It’s fine to keep it short—or share the whole story.</p><div class="feedback-aside-foot"><span class="feedback-status-dot"></span>Thanks for helping Forma grow.</div></aside>
       </div>
       <footer class="page-footer"><span>THANK YOU FOR BEING HERE</span><a href="#dashboard" data-view="dashboard">Back to dashboard ↗</a></footer>
+    </div>`;
+
+  if (view === "typography") return `
+    <div class="product-page typography-page">
+      <header class="page-heading"><div><div class="eyebrow">FOUNDATIONS / TYPOGRAPHY</div><h1>Words have a<br><em>shape of their own.</em></h1><p>A practical type system for clear hierarchy, comfortable reading, and a little personality.</p></div><span class="post-count">TYPE SCALE / 08 STYLES</span></header>
+      <section class="type-hero-specimen" aria-label="Typography display specimen">
+        <div class="type-hero-left"><span class="eyebrow">DISPLAY / MANROPE · 600</span><p>Good ideas<br><em>deserve space.</em></p><span class="type-hero-alphabet">Aa Bb Cc Dd Ee Ff Gg Hh</span></div>
+        <div class="type-hero-right"><span class="type-hero-index">01 — DISPLAY</span><strong>48 / 52</strong><small>Font size / line height</small><div class="type-font-chip">MANROPE <span>DISPLAY</span></div></div>
+      </section>
+      <section class="typography-scale">
+        <div class="type-scale-heading"><div><span class="eyebrow">A SHARED RHYTHM</span><h2>One voice. A clear scale.</h2></div><span class="type-pair-label">MANROPE + DM SANS + DM MONO</span></div>
+        <div class="type-scale-list">
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Display</strong><small>Manrope · 600</small></div><div class="type-scale-sample type-scale-display">Make it matter.</div><span class="type-scale-measure">48 / 52</span></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Heading 1</strong><small>Manrope · 600</small></div><div class="type-scale-sample type-scale-h1">Designed to feel right.</div><span class="type-scale-measure">36 / 42</span></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Heading 2</strong><small>Manrope · 600</small></div><div class="type-scale-sample type-scale-h2">A thoughtful system.</div><span class="type-scale-measure">28 / 34</span></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Heading 3</strong><small>Manrope · 600</small></div><div class="type-scale-sample type-scale-h3">Details make the difference.</div><span class="type-scale-measure">22 / 30</span></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Body</strong><small>DM Sans · 400</small></div><div class="type-scale-sample type-scale-body">Good systems make room for good ideas.</div><span class="type-scale-measure">16 / 26</span></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Body small</strong><small>DM Sans · 400</small></div><div class="type-scale-sample type-scale-small">Keep supporting details easy to scan and comfortable to read.</div><span class="type-scale-measure">13 / 20</span></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Caption</strong><small>DM Sans · 500</small></div><div class="type-scale-sample type-scale-caption">A LITTLE MORE CONTEXT</div><span class="type-scale-measure">11 / 16</span></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><strong>Label</strong><small>DM Mono · 400</small></div><div class="type-scale-sample type-scale-label">FOUNDATIONS / TYPE / 01</div><span class="type-scale-measure">10 / 14</span></div>
+        </div>
+      </section>
+      <section class="type-usage-note"><span class="type-usage-mark">Aa</span><div><span class="eyebrow">TYPE IN PRACTICE</span><h2>Hierarchy without noise.</h2><p>Use display and heading styles to guide attention. Keep body copy relaxed, labels brief, and line length comfortable.</p></div><a href="#home" data-library-anchor="foundations">See the foundations ↗</a></section>
+      <footer class="page-footer"><span>TYPE / MANROPE · DM SANS · DM MONO</span><a href="#component-library" data-view="component-library">Explore components ↗</a></footer>
+    </div>`;
+
+  if (view === "component-library") return `
+    <div class="product-page component-library-page">
+      <header class="page-heading"><div><div class="eyebrow">THE FORMA LIBRARY / COMPONENTS</div><h1>All the pieces.<br><em>Working together.</em></h1><p>Reusable interface building blocks, with clear examples and states you can explore.</p></div><span class="post-count">10 COMPONENTS / 02</span></header>
+      <div class="component-library-slot" id="component-library-slot" aria-label="Component examples"></div>
+      <p class="component-library-note">Try the tabs, buttons, pagination, and modal examples. These are interactive previews.</p>
+      <footer class="page-footer"><span>COMPONENTS / REUSABLE ELEMENTS</span><a href="#typography" data-view="typography">Review typography ↗</a></footer>
     </div>`;
 
   if (view === "icons") return `

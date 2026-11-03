@@ -36,7 +36,7 @@ document.querySelector("#app").innerHTML = `
     <a class="brand" href="#home" data-view="home" aria-label="Forma home"><img class="brand-mark brand-mark-image" src="/forma-icon.png" alt=""><span>forma<span class="brand-period">.</span></span></a>
     <div class="sidebar-meta"><span class="live-dot"></span> DESIGN SYSTEM <span class="version">v1.0</span></div>
     <a class="side-link home-link active" href="#home" data-nav="home" data-view="home">${icon("grid")}<span>Home</span><span class="home-arrow">↗</span></a>
-    <div class="side-label product-label">YOUR SPACE <span>07</span></div>
+    <div class="side-label product-label">YOUR SPACE <span>09</span></div>
     <nav class="side-nav product-nav" aria-label="Your pages">${productNavItems}</nav>
     <div class="sidebar-auth"><a href="#signup" data-view="signup">Sign up <span>↗</span></a><a href="#signin" data-view="signin">Sign in</a></div>
     <div class="side-label">THE LIBRARY <span>09</span></div>
@@ -384,7 +384,13 @@ function navigate(view, updateUrl = false, plan = "") {
   if (plan) selectedPlan = plan;
   const isExtraPage = view !== "home";
   document.querySelector(".main-shell").classList.toggle("route-view", isExtraPage);
-  document.querySelector("#extra-pages").innerHTML = isExtraPage ? renderExtraPage(view, selectedPlan) : "";
+  const extraPages = document.querySelector("#extra-pages");
+  extraPages.innerHTML = isExtraPage ? renderExtraPage(view, selectedPlan) : "";
+  if (view === "component-library") {
+    const sourceGrid = document.querySelector("#page-content #components .spec-grid");
+    const componentSlot = extraPages.querySelector("#component-library-slot");
+    if (sourceGrid && componentSlot) componentSlot.append(sourceGrid.cloneNode(true));
+  }
   document.querySelector("#crumb-current").textContent = routeLabels[view] || "Home";
   document.querySelectorAll("[data-view]").forEach(link => {
     link.classList.toggle("route-active", link.dataset.view === view);
