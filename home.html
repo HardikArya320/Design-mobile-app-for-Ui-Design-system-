@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home | UI Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#4f46e5"/><path d="M9 16.5l4.5 4.5L23 11.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>UI Kit</span>
+      </div>
+      <nav class="nav" aria-label="Main">
+        <a href="home.html" class="nav-link is-active" aria-current="page">Home</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="signup-signin.html" class="nav-link">Account</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="home-title">
+        <p class="eyebrow">Design system</p>
+        <h1 id="home-title">Build interfaces faster with one shared kit.</h1>
+        <p class="lead">Buttons, inputs, icons and screens that match, ready to drop into any product.</p>
+        <div class="actions">
+          <a href="signup-signin.html" class="btn btn-primary">Get started</a>
+          <a href="blog.html" class="btn btn-ghost">Read the blog</a>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="components-title">
+        <h2 id="components-title">Components</h2>
+        <div class="grid">
+          <article class="tile">
+            <span class="tile-icon" aria-hidden="true">🔘</span>
+            <h3>Buttons</h3>
+            <p>Primary, ghost and link styles with clear focus states.</p>
+          </article>
+          <article class="tile">
+            <span class="tile-icon" aria-hidden="true">📧</span>
+            <h3>Form inputs</h3>
+            <p>Labelled fields with icons, hints and inline validation.</p>
+          </article>
+          <article class="tile">
+            <span class="tile-icon" aria-hidden="true">🔒</span>
+            <h3>Sign up and sign in</h3>
+            <p>Account screens built from the same tokens as everything else.</p>
+          </article>
+          <article class="tile">
+            <span class="tile-icon" aria-hidden="true">🎨</span>
+            <h3>Colour tokens</h3>
+            <p>One accent, neutral greys and a danger colour, set once in CSS.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="latest-title">
+        <div class="section-head">
+          <h2 id="latest-title">Latest from the blog</h2>
+          <a href="blog.html" class="link">See all</a>
+        </div>
+        <ul class="list">
+          <li class="list-item">
+            <p class="meta">Guide</p>
+            <a href="blog.html" class="list-title">Why a shared token set saves review time</a>
+          </li>
+          <li class="list-item">
+            <p class="meta">Update</p>
+            <a href="blog.html" class="list-title">New form states for the sign up flow</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 UI Kit. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --bg: #f5f6fa;
+      --card: #ffffff;
+      --accent: #4f46e5;
+      --accent-ink: #ffffff;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    .app { min-height: 100vh; display: flex; flex-direction: column; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 20px;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+    .nav { display: flex; gap: 4px; }
+    .nav-link {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 9px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--ink); background: #f3f4f6; }
+    .nav-link.is-active { color: var(--accent); background: #eef2ff; }
+    main { flex: 1; width: 100%; max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    .hero { padding: 64px 0 40px; }
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      margin: 0 0 14px;
+      max-width: 18ch;
+    }
+    .lead { margin: 0 0 26px; color: var(--muted); font-size: 17px; max-width: 52ch; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      padding: 0 22px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-ink);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(79, 70, 229, 0.3); }
+    .btn-ghost { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+    .btn-ghost:hover { background: #f9fafb; }
+    .btn:focus-visible, .nav-link:focus-visible, .link:focus-visible {
+      outline: 3px solid rgba(79, 70, 229, 0.35);
+      outline-offset: 2px;
+    }
+    .section { padding: 32px 0; }
+    .section h2 { font-size: 20px; letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 800; }
+    .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+    .section-head h2 { margin: 0; }
+    .link { color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none; }
+    .link:hover { text-decoration: underline; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .tile {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tile:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(17, 24, 39, 0.06); }
+    .tile-icon { font-size: 22px; display: inline-block; margin-bottom: 10px; }
+    .tile h3 { font-size: 16px; margin: 0 0 6px; font-weight: 700; }
+    .tile p { margin: 0; color: var(--muted); font-size: 14px; }
+    .list { list-style: none; margin: 0; padding: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+    .list-item { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+    .list-item:last-child { border-bottom: 0; }
+    .meta { margin: 0 0 2px; font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+    .list-title { font-weight: 600; text-decoration: none; }
+    .list-title:hover { text-decoration: underline; }
+    .footer { padding: 28px 20px; text-align: center; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); margin-top: 32px; }
+    .footer p { margin: 0; }
+    @media (max-width: 480px) {
+      .hero { padding: 40px 0 28px; }
+      .topbar { padding: 12px 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</body>
+</html>

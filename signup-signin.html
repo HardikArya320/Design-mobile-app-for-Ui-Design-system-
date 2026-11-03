@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign up and sign in | UI Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="screen">
+    <section class="card" aria-labelledby="signup-title" id="signup" data-screen="signup">
+      <div class="brand" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="32" height="32"><rect width="32" height="32" rx="9" fill="#4f46e5"/><path d="M9 16.5l4.5 4.5L23 11.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>UI Kit</span>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Choose form">
+        <button class="tab is-active" role="tab" aria-selected="true" aria-controls="signup-panel" type="button" data-tab="signup">Sign up</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="signin-panel" type="button" data-tab="signin">Sign in</button>
+      </div>
+
+      <!-- SIGN UP -->
+      <form id="signup-panel" class="form" role="tabpanel" novalidate>
+        <h1 id="signup-title">Create your account</h1>
+        <p class="lead">Start building with the design system in under a minute.</p>
+
+        <div class="field">
+          <label for="su-name">Full name</label>
+          <input id="su-name" name="name" type="text" autocomplete="name" placeholder="Jane Doe" required>
+          <p class="error" data-error-for="su-name"></p>
+        </div>
+
+        <div class="field">
+          <label for="su-email">Enter your Email</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">📧</span>
+            <input id="su-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <p class="error" data-error-for="su-email"></p>
+        </div>
+
+        <div class="field">
+          <label for="su-password">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">🔒</span>
+            <input id="su-password" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" minlength="8" required>
+          </div>
+          <p class="hint">Use 8 or more characters.</p>
+          <p class="error" data-error-for="su-password"></p>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" name="terms" required>
+          <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</span>
+        </label>
+        <p class="error" data-error-for="su-terms"></p>
+
+        <button class="btn btn-primary" type="submit">Create account</button>
+        <p class="switch">Already have an account? <button type="button" class="link" data-tab="signin">Sign in</button></p>
+      </form>
+
+      <!-- SIGN IN -->
+      <form id="signin-panel" class="form" role="tabpanel" novalidate hidden>
+        <h1>Welcome back</h1>
+        <p class="lead">Sign in to continue to your workspace.</p>
+
+        <div class="field">
+          <label for="si-email">Enter your Email</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">📧</span>
+            <input id="si-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <p class="error" data-error-for="si-email"></p>
+        </div>
+
+        <div class="field">
+          <label for="si-password">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">🔒</span>
+            <input id="si-password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+          </div>
+          <p class="error" data-error-for="si-password"></p>
+        </div>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" name="remember"><span>Remember me</span></label>
+          <a href="#" class="link-plain">Forgot password?</a>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Sign in</button>
+        <p class="switch">New here? <button type="button" class="link" data-tab="signup">Create an account</button></p>
+      </form>
+
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll('.tab');
+      var panels = { signup: document.getElementById('signup-panel'), signin: document.getElementById('signin-panel') };
+      var titles = { signup: 'Sign up', signin: 'Sign in' };
+
+      function show(name) {
+        Object.keys(panels).forEach(function (key) {
+          panels[key].hidden = key !== name;
+        });
+        tabs.forEach(function (t) {
+          var active = t.getAttribute('data-tab') === name;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        document.getElementById('status').textContent = '';
+      }
+
+      document.querySelectorAll('[data-tab]').forEach(function (el) {
+        el.addEventListener('click', function () { show(el.getAttribute('data-tab')); });
+      });
+
+      function setError(id, msg) {
+        var el = document.querySelector('[data-error-for="' + id + '"]');
+        if (el) el.textContent = msg || '';
+        var input = document.getElementById(id);
+        if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      }
+
+      function validEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      }
+
+      function validate(form) {
+        var ok = true;
+        form.querySelectorAll('input').forEach(function (input) {
+          if (input.type === 'checkbox') return;
+          var msg = '';
+          if (!input.value.trim()) msg = 'This field is required.';
+          else if (input.type === 'email' && !validEmail(input.value.trim())) msg = 'Enter a valid email address.';
+          else if (input.name === 'password' && input.value.length < 8) msg = 'Use at least 8 characters.';
+          setError(input.id, msg);
+          if (msg) ok = false;
+        });
+        var terms = form.querySelector('input[name="terms"]');
+        if (terms && !terms.checked) {
+          setError('su-terms', 'Please accept the terms to continue.');
+          ok = false;
+        } else if (terms) {
+          setError('su-terms', '');
+        }
+        return ok;
+      }
+
+      document.getElementById('signup-panel').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var status = document.getElementById('status');
+        if (validate(this)) {
+          status.textContent = 'Account created. Check your email to confirm.';
+        } else {
+          status.textContent = '';
+        }
+      });
+
+      document.getElementById('signin-panel').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var status = document.getElementById('status');
+        if (validate(this)) {
+          status.textContent = 'Signed in.';
+        } else {
+          status.textContent = '';
+        }
+      });
+    })();
+  </script>
+
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --bg: #f5f6fa;
+      --card: #ffffff;
+      --accent: #4f46e5;
+      --accent-ink: #ffffff;
+      --danger: #dc2626;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 22px;
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f3f4f6;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+    .tab {
+      border: 0;
+      background: transparent;
+      padding: 10px 0;
+      border-radius: 9px;
+      font: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .tab.is-active {
+      background: var(--card);
+      color: var(--ink);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    .form[hidden] { display: none; }
+    h1 {
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+      font-weight: 800;
+    }
+    .lead {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .field { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0 14px;
+      font: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap input { padding-left: 42px; }
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    }
+    input[aria-invalid="true"] { border-color: var(--danger); }
+    .hint { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
+    .error {
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: var(--danger);
+      min-height: 0;
+    }
+    .error:empty { display: none; }
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 4px 0 0;
+      cursor: pointer;
+    }
+    .check input { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--accent); }
+    .check a, .link, .link-plain { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .check a:hover, .link:hover, .link-plain:hover { text-decoration: underline; }
+    .link {
+      background: none;
+      border: 0;
+      padding: 0;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .link-plain { font-size: 13px; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .btn {
+      width: 100%;
+      height: 48px;
+      border: 0;
+      border-radius: 12px;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-ink);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+      margin-top: 6px;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(79, 70, 229, 0.3); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn:focus-visible { outline: 3px solid rgba(79, 70, 229, 0.35); outline-offset: 2px; }
+    .switch {
+      margin: 18px 0 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .status {
+      margin: 16px 0 0;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: #15803d;
+      min-height: 20px;
+    }
+    @media (max-width: 480px) {
+      .card { padding: 22px 18px; border-radius: 16px; }
+      h1 { font-size: 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</body>
+</html>

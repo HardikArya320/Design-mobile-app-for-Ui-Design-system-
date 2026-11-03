@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog | UI Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#4f46e5"/><path d="M9 16.5l4.5 4.5L23 11.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>UI Kit</span>
+      </div>
+      <nav class="nav" aria-label="Main">
+        <a href="home.html" class="nav-link">Home</a>
+        <a href="blog.html" class="nav-link is-active" aria-current="page">Blog</a>
+        <a href="signup-signin.html" class="nav-link">Account</a>
+      </nav>
+    </header>
+
+    <main>
+      <header class="page-head">
+        <p class="eyebrow">Blog</p>
+        <h1>Notes on building with the design system</h1>
+        <p class="lead">Short articles on tokens, components and the screens that tie them together.</p>
+      </header>
+
+      <div class="filters" role="group" aria-label="Filter posts">
+        <button class="chip is-active" type="button" aria-pressed="true" data-filter="all">All</button>
+        <button class="chip" type="button" aria-pressed="false" data-filter="guide">Guides</button>
+        <button class="chip" type="button" aria-pressed="false" data-filter="update">Updates</button>
+      </div>
+
+      <section class="posts" aria-label="Posts">
+        <article class="post" data-category="guide">
+          <p class="meta">Guide &middot; 4 min read</p>
+          <h2><a href="#">Why a shared token set saves review time</a></h2>
+          <p class="excerpt">When colours, radii and type sizes live in one place, a design review becomes a conversation about intent instead of pixels.</p>
+        </article>
+        <article class="post" data-category="update">
+          <p class="meta">Update &middot; 2 min read</p>
+          <h2><a href="#">New form states for the sign up flow</a></h2>
+          <p class="excerpt">Inputs now show inline errors, a clear focus ring and an invalid state that also works for screen readers.</p>
+        </article>
+        <article class="post" data-category="guide">
+          <p class="meta">Guide &middot; 6 min read</p>
+          <h2><a href="#">Designing a home screen that guides people</a></h2>
+          <p class="excerpt">Lead with one clear action, then offer the components and articles that support it, in that order.</p>
+        </article>
+      </section>
+
+      <p class="empty" id="empty" hidden>No posts in this category yet.</p>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 UI Kit. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var chips = document.querySelectorAll('.chip');
+      var posts = document.querySelectorAll('.post');
+      var empty = document.getElementById('empty');
+
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          var filter = chip.getAttribute('data-filter');
+          chips.forEach(function (c) {
+            var active = c === chip;
+            c.classList.toggle('is-active', active);
+            c.setAttribute('aria-pressed', active ? 'true' : 'false');
+          });
+          var shown = 0;
+          posts.forEach(function (post) {
+            var match = filter === 'all' || post.getAttribute('data-category') === filter;
+            post.hidden = !match;
+            if (match) shown++;
+          });
+          empty.hidden = shown > 0;
+        });
+      });
+    })();
+  </script>
+
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --bg: #f5f6fa;
+      --card: #ffffff;
+      --accent: #4f46e5;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    .app { min-height: 100vh; display: flex; flex-direction: column; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 20px;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+    .nav { display: flex; gap: 4px; }
+    .nav-link {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 9px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--ink); background: #f3f4f6; }
+    .nav-link.is-active { color: var(--accent); background: #eef2ff; }
+    main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 0 20px; }
+    .page-head { padding: 52px 0 24px; }
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      font-size: clamp(28px, 4.5vw, 40px);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      margin: 0 0 12px;
+    }
+    .lead { margin: 0; color: var(--muted); font-size: 16px; max-width: 56ch; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+    .chip {
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--muted);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .chip:hover { color: var(--ink); }
+    .chip.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .chip:focus-visible, .nav-link:focus-visible, .post a:focus-visible {
+      outline: 3px solid rgba(79, 70, 229, 0.35);
+      outline-offset: 2px;
+    }
+    .posts { display: flex; flex-direction: column; gap: 14px; }
+    .post {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .post[hidden] { display: none; }
+    .post:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(17, 24, 39, 0.06); }
+    .meta { margin: 0 0 6px; font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+    .post h2 { font-size: 19px; line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 8px; font-weight: 700; }
+    .post h2 a { text-decoration: none; }
+    .post h2 a:hover { text-decoration: underline; }
+    .excerpt { margin: 0; color: var(--muted); font-size: 15px; }
+    .empty { color: var(--muted); text-align: center; margin: 32px 0; }
+    .empty[hidden] { display: none; }
+    .footer { padding: 28px 20px; text-align: center; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); margin-top: 40px; }
+    .footer p { margin: 0; }
+    @media (max-width: 480px) {
+      .page-head { padding: 36px 0 20px; }
+      .topbar { padding: 12px 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</body>
+</html>
