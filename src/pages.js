@@ -11,13 +11,64 @@ const avatar = (className = "") => `<img class="hardik-avatar ${className}" src=
 
 export const appNavigation = [
   ["home", "Home", "⌂"],
+  ["dashboard", "Dashboard", '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>'],
   ["profile", "Profile", "◉"],
   ["blog", "Blog", "▤"],
   ["pricing", "Plans", "◇"],
-  ["support", "Live support", "◌"]
+  ["support", "Live support", "◌"],
+  ["feedback", "Feedback", "✎"]
 ];
 
 export function renderExtraPage(view, selectedPlan = "") {
+  if (view === "dashboard") return `
+    <div class="product-page dashboard-page">
+      <header class="dashboard-welcome">
+        <div class="dashboard-hello">${avatar("dashboard-avatar")}<div><div class="eyebrow">YOUR FORMA WORKSPACE</div><h1>Good to see you, Hardik.</h1><p>A home for the things you’re making and the system behind them.</p></div></div>
+        <a class="button button-dark" href="#feedback" data-view="feedback">Share feedback <span>↗</span></a>
+      </header>
+      <section class="dashboard-metrics" aria-label="Forma library overview">
+        <article class="metric-card metric-green"><span>THE LIBRARY</span><strong>09</strong><small>Design system chapters</small><a href="#home" data-library-anchor="foundations">Explore the library ↗</a></article>
+        <article class="metric-card"><span>REUSABLE ELEMENTS</span><strong>57</strong><small>Reference items across 9 chapters</small><a href="#home" data-library-anchor="components">Browse components ↗</a></article>
+        <article class="metric-card"><span>THE JOURNAL</span><strong>03</strong><small>Notes on design and making</small><a href="#blog" data-view="blog">Read the blog ↗</a></article>
+        <article class="metric-card metric-lilac"><span>YOUR PROFILE</span>${avatar("metric-avatar")}<strong>Hardik Arya</strong><small>Ui Designer system management</small><a href="#profile" data-view="profile">View profile ↗</a></article>
+      </section>
+      <div class="dashboard-columns">
+        <section class="dashboard-library">
+          <div class="dash-section-heading"><div><span class="eyebrow">BUILT TO BE EXPLORED</span><h2>Start anywhere.</h2></div><a href="#home" data-library-anchor="foundations">All chapters ↗</a></div>
+          <div class="dash-chapter-list">
+            <a href="#home" data-library-anchor="foundations"><span class="dash-chapter-num">01</span><span class="dash-chapter-mark mark-lime">✳</span><span><strong>Foundations</strong><small>Colour, type, spacing, and tokens.</small></span><span class="dash-chapter-arrow">↗</span></a>
+            <a href="#home" data-library-anchor="components"><span class="dash-chapter-num">02</span><span class="dash-chapter-mark mark-blue">▦</span><span><strong>Components</strong><small>Reusable pieces for thoughtful interfaces.</small></span><span class="dash-chapter-arrow">↗</span></a>
+            <a href="#home" data-library-anchor="patterns"><span class="dash-chapter-num">05</span><span class="dash-chapter-mark mark-rose">⌁</span><span><strong>Patterns</strong><small>Familiar flows, considered from the start.</small></span><span class="dash-chapter-arrow">↗</span></a>
+            <a href="#home" data-library-anchor="accessibility"><span class="dash-chapter-num">08</span><span class="dash-chapter-mark mark-lilac">◉</span><span><strong>Accessibility</strong><small>Make room for more people.</small></span><span class="dash-chapter-arrow">↗</span></a>
+          </div>
+        </section>
+        <aside class="dashboard-actions"><span class="eyebrow">WHAT WOULD YOU LIKE TO DO?</span><h2>Make a little<br><em>progress.</em></h2>
+          <a href="#profile" data-view="profile"><span class="dash-action-icon">◉</span><span><strong>Open your profile</strong><small>Make it personal.</small></span><b>↗</b></a>
+          <a href="#blog" data-view="blog"><span class="dash-action-icon">▤</span><span><strong>Read the journal</strong><small>Find a fresh point of view.</small></span><b>↗</b></a>
+          <a href="#pricing" data-view="pricing"><span class="dash-action-icon">◇</span><span><strong>Explore the plans</strong><small>Find your starting point.</small></span><b>↗</b></a>
+          <a href="#support" data-view="support"><span class="dash-action-icon">◌</span><span><strong>Talk to support</strong><small>Open a local chat preview.</small></span><b>↗</b></a>
+        </aside>
+      </div>
+      <footer class="page-footer"><span>YOUR WORKSPACE, YOUR PACE</span><a href="#feedback" data-view="feedback">Tell me what you think ↗</a></footer>
+    </div>`;
+
+  if (view === "feedback") return `
+    <div class="product-page feedback-page">
+      <header class="page-heading"><div><div class="eyebrow">A NOTE TO THE FORMA STUDIO</div><h1>Tell me what<br><em>you think.</em></h1><p>Share an idea, point out a rough edge, or tell us what you’d like to see next.</p></div><span class="feedback-label"><span>✳</span> YOUR VOICE MATTERS</span></header>
+      <div class="feedback-layout">
+        <form class="feedback-form" id="feedback-form">
+          <label>Your name <span class="optional-label">OPTIONAL</span><input name="name" autocomplete="name" placeholder="What should we call you?"></label>
+          <label>What’s this about?<select name="topic"><option>Choose a topic</option><option>The design system</option><option>A feature idea</option><option>Something isn’t working</option><option>Something else</option></select></label>
+          <label>Your message <span class="optional-label">REQUIRED</span><textarea id="feedback-message" name="message" required maxlength="1200" rows="6" placeholder="Write your feedback here…"></textarea><span class="message-count"><span id="feedback-count">0</span> / 1200</span></label>
+          <div class="feedback-consent"><span>✳</span><p>This is a local preview. Your note won’t be sent or stored.</p></div>
+          <button class="button button-dark feedback-submit" type="submit">Send feedback <span>↗</span></button>
+          <p class="feedback-status" id="feedback-status" role="status" aria-live="polite"></p>
+        </form>
+        <aside class="feedback-aside"><div class="feedback-aside-mark">✳</div><span class="eyebrow">SMALL DETAILS MAKE A DIFFERENCE</span><h2>Good systems<br>grow from <em>good conversations.</em></h2><p>Your feedback helps shape the next thoughtful detail. It’s fine to keep it short—or share the whole story.</p><div class="feedback-aside-foot"><span class="feedback-status-dot"></span>Thanks for helping Forma grow.</div></aside>
+      </div>
+      <footer class="page-footer"><span>THANK YOU FOR BEING HERE</span><a href="#dashboard" data-view="dashboard">Back to dashboard ↗</a></footer>
+    </div>`;
+
   if (view === "profile") return `
     <div class="product-page profile-page">
       <div class="profile-cover"><img src="${spaceArt}" alt="Layered planets and colour in a deep space illustration"><span class="cover-caption">CREATIVE SPACE / 001</span></div>

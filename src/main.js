@@ -36,7 +36,7 @@ document.querySelector("#app").innerHTML = `
     <a class="brand" href="#home" data-view="home" aria-label="Forma home"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>forma<span class="brand-period">.</span></span></a>
     <div class="sidebar-meta"><span class="live-dot"></span> DESIGN SYSTEM <span class="version">v1.0</span></div>
     <a class="side-link home-link active" href="#home" data-nav="home" data-view="home">${icon("grid")}<span>Home</span><span class="home-arrow">↗</span></a>
-    <div class="side-label product-label">YOUR SPACE <span>05</span></div>
+    <div class="side-label product-label">YOUR SPACE <span>07</span></div>
     <nav class="side-nav product-nav" aria-label="Your pages">${productNavItems}</nav>
     <div class="sidebar-auth"><a href="#signup" data-view="signup">Sign up <span>↗</span></a><a href="#signin" data-view="signin">Sign in</a></div>
     <div class="side-label">THE LIBRARY <span>09</span></div>
@@ -52,7 +52,7 @@ document.querySelector("#app").innerHTML = `
         <div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> THE OPEN DESIGN SYSTEM</div><h1>Good design<br>starts <em>with a system.</em></h1><p class="hero-lead">A shared language for creating digital experiences that feel clear, consistent, and unmistakably human.</p><div class="hero-actions"><a class="button button-dark" href="#foundations">Explore the system ${icon("arrow")}</a><a class="text-link" href="#components">Browse components <span>↗</span></a></div><div class="hero-proof"><div class="avatar-stack"><span>F</span><span>DS</span><span>+</span></div><span>Made for teams who care<br><strong>about the details.</strong></span></div></div>
         <div class="hero-art" aria-label="Abstract composition illustrating the Forma design system"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-label label-top">A SYSTEM, NOT A TEMPLATE <span>↗</span></div><div class="art-circle"><div class="art-inner"><span class="art-cross">✳</span><strong>form<br>follows<br><i>feeling.</i></strong><small>F / 001</small></div></div><div class="art-sticker">DESIGNED<br>TO FIT<br><span>↘ YOU</span></div><div class="art-caption">A little more intentional.<br>A lot more you.</div><div class="art-grid"></div></div>
       </section>
-      <section class="overview-strip"><div><strong>09</strong><span>thoughtful chapters</span></div><div><strong>47</strong><span>building blocks</span></div><div><strong>∞</strong><span>ways to make it yours</span></div><div class="strip-note">A living library for better<br>digital experiences. <span>●</span></div></section>
+      <section class="overview-strip"><div><strong>09</strong><span>thoughtful chapters</span></div><div><strong>57</strong><span>building blocks</span></div><div><strong>∞</strong><span>ways to make it yours</span></div><div class="strip-note">A living library for better<br>digital experiences. <span>●</span></div></section>
       <section class="library-intro"><div><div class="eyebrow">YOUR CREATIVE STARTING POINT</div><h2>Everything in its<br><em>right place.</em></h2></div><p>From the first colour decision to the last interaction state, explore the small, consistent choices that make a product feel like one complete thought.</p></section>
       <section class="chapter-grid" aria-label="Design system chapters">${groups.map(g => `<a href="#${g.id}" class="chapter-card" data-chapter="${g.id}"><div class="chapter-card-top"><span class="chapter-number">${g.number}</span><span class="chapter-arrow">↗</span></div><h3>${g.name}</h3><p>${g.caption}</p><div class="chapter-tags">${g.items.slice(0, 3).map(x => `<span>${x}</span>`).join("")}${g.items.length > 3 ? `<span class="more-tag">+${g.items.length - 3}</span>` : ""}</div></a>`).join("")}</section>
       <div class="library-header"><div><div class="eyebrow">THE REFERENCE</div><h2>Built to be <em>used.</em></h2></div><span class="library-counter">01 — 09 / CHAPTERS</span></div>
@@ -288,6 +288,12 @@ document.querySelectorAll(".demo-form").forEach(form => form.addEventListener("s
 }));
 
 document.addEventListener("submit", event => {
+  if (event.target.matches("#feedback-form")) {
+    event.preventDefault();
+    document.querySelector("#feedback-status").textContent = "Thanks for sharing. This preview doesn’t send or save your feedback.";
+    return;
+  }
+
   if (event.target.matches("#chat-form")) {
     event.preventDefault();
     const input = document.querySelector("#chat-input");
@@ -319,6 +325,12 @@ document.addEventListener("submit", event => {
   if (event.target.matches(".demo-auth-form")) {
     event.preventDefault();
     event.target.querySelector(".auth-feedback").textContent = "This is a preview. No account was created and no details were sent.";
+  }
+});
+
+document.addEventListener("input", event => {
+  if (event.target.matches("#feedback-message")) {
+    document.querySelector("#feedback-count").textContent = event.target.value.length;
   }
 });
 
@@ -388,6 +400,7 @@ function navigate(view, updateUrl = false, plan = "") {
 }
 
 window.addEventListener("popstate", () => navigate(location.hash.slice(1) || "home"));
-if (["profile", "blog", "pricing", "support", "signup", "signin"].includes(location.hash.slice(1))) {
-  navigate(location.hash.slice(1));
+const initialView = location.hash.slice(1);
+if ((initialView !== "home" && appNavigation.some(([id]) => id === initialView)) || ["signup", "signin"].includes(initialView)) {
+  navigate(initialView);
 }
